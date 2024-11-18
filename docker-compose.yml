@@ -1,0 +1,25 @@
+services:
+  mongodb:
+    image: mongo
+    volumes:
+      - goals-app-data:/data/db
+  backend:
+    build:
+      context: ./backend
+    volumes:
+      - /app/node_modules
+      - ./backend:/app
+    ports:
+      - 8080:8080
+    depends_on:
+      - mongodb
+  frontend:
+    build:
+      context: ./frontend
+    volumes:
+      - /app/node_modules
+      - ./frontend:/app
+    ports:
+      - 3000:3000
+volumes:
+  goals-app-data:
